@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MNQ Live — Analytics</title>
+<style>
+:root{color-scheme:dark;--bg:#0e1116;--card:#161a20;--ink:#e6e8ec;--muted:#8b93a1;--line:#252b34;
+--green:#22c55e;--red:#ef4444;--flat:#1a1f27;--asian:#eab308;--london:#22c55e;--ny:#3b82f6;--accent:#2a3140;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 22px 40px}
+h1{font-size:20px;margin:0 0 2px;font-weight:700;letter-spacing:-.3px}
+.sub{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+.tag{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:20px;background:var(--flat);color:var(--muted);margin-left:6px;vertical-align:middle}
+.nav2{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.nav2 a{font-size:12.5px;font-weight:600;text-decoration:none;color:var(--muted);padding:6px 13px;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+.nav2 a.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card .lbl{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.card .val{font-size:23px;font-weight:700;margin-top:6px;letter-spacing:-.5px}
+.pos{color:var(--green)} .neg{color:var(--red)}
+.chartbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.chartbox h2{font-size:14px;margin:0 0 12px;font-weight:650}
+.cwrap{position:relative;height:240px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px;justify-content:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.foot{color:var(--muted);font-size:11px;margin-top:14px;text-align:center}
+</style></head>
+<body><div class="wrap">
+<div class="nav2"><a href="/">Dashboard</a><a href="/analytics">Analytics</a><a href="/time">Time</a><a href="/risk">Risk</a><a href="/discipline" class="active">Discipline</a></div>
+
+<h1>Discipline Analysis <span class="tag" id="upd"></span></h1>
+<div class="sub">Rules-followed &amp; tag performance · sourced from your Notion TRADES DB</div>
+<div class="cards" id="cards"></div>
+<div class="grid2">
+  <div class="chartbox"><h2>Positive Tags Performance</h2><div class="cwrap"><div id="pos" style="width:100%;height:100%"></div></div></div>
+  <div class="chartbox"><h2>Negative Tags Performance</h2><div class="cwrap"><div id="neg" style="width:100%;height:100%"></div></div></div>
+</div>
+<div class="foot" style="margin-top:0">Each bar is the total P/L of the trades carrying that tag, and the number in parentheses is how many trades. A single trade can carry several tags (e.g. the 7/27 −$1,743 day is impulsive + sl-placement + revenge-trading), so tag totals overlap and can exceed your net P/L.</div>
+
+<div class="foot">Source: MNQ Live Journal.xlsx (Excel-only). Session/entry-window derived from entry time (ET). Drawdown &amp; risk stats are trading-only — the $2,000 withdrawal is excluded, not counted as a loss.</div>
+</div>
+<script>
+const DATA={"meta": {"winRate": 0.4444, "tradingPnl": -1486.0, "returnPct": -0.2972, "profitFactor": 0.25, "totalTrades": 9, "wins": 4, "losses": 5, "start": 5000, "updated": "Jul 29, 2026 11:08 AM", "avgPerDay": -371.5, "avgPerMonth": -1486.0, "bestDay": 207.38, "worstDay": -1743.24, "nDays": 4, "nMonths": 1, "maxDD": -1912.54, "biggestWin": 186.72, "biggestLoss": -1743.24, "recoveryFactor": -0.78, "avgWin": 126.15, "avgLoss": -398.12, "rr": 0.32, "consistency": 0.5, "greenDays": 2, "currentNetLiq": 1514, "withdrawn": 2000, "peak": 5066.44, "expectancy": -165.11, "avgHoldMin": 56, "maxWinStreak": 2, "maxLossStreak": 3, "curStreak": 1}, "trades": [{"date": "2026-07-26", "dir": "Short", "net": 66.44, "session": "Asian", "dow": "Sunday", "entry": "18:23", "exit": "18:29", "hold": 6, "win": "6-7pm", "hr": 18}, {"date": "2026-07-26", "dir": "Long", "net": -163.18, "session": "Asian", "dow": "Sunday", "entry": "19:54", "exit": null, "hold": null, "win": "7-8pm", "hr": 19}, {"date": "2026-07-26", "dir": "Long", "net": -6.12, "session": "Asian", "dow": "Sunday", "entry": "20:37", "exit": "20:42", "hold": 5, "win": "8-9pm", "hr": 20}, {"date": "2026-07-27", "dir": "Mixed", "net": -1743.24, "session": "London", "dow": "Monday", "entry": "06:14", "exit": "10:23", "hold": 249, "win": "6-7am", "hr": 6}, {"date": "2026-07-28", "dir": "Short", "net": 152.72, "session": "New York", "dow": "Tuesday", "entry": "11:39", "exit": "14:24", "hold": 165, "win": "11-12pm", "hr": 11}, {"date": "2026-07-29", "dir": "Short", "net": 186.72, "session": "New York", "dow": "Wednesday", "entry": "10:04", "exit": "10:12", "hold": 8, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Long", "net": -5.28, "session": "New York", "dow": "Wednesday", "entry": "10:15", "exit": "10:16", "hold": 1, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Long", "net": -72.78, "session": "New York", "dow": "Wednesday", "entry": "10:17", "exit": "10:24", "hold": 7, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Short", "net": 98.72, "session": "New York", "dow": "Wednesday", "entry": "10:38", "exit": "10:46", "hold": 8, "win": "10-11am", "hr": 10}], "equity": [{"label": "start", "bal": 5000, "type": "start"}, {"label": "2026-07-26", "bal": 5066.44, "type": "trade"}, {"label": "2026-07-26", "bal": 4903.26, "type": "trade"}, {"label": "2026-07-26", "bal": 4897.14, "type": "trade"}, {"label": "2026-07-27", "bal": 3153.9, "type": "trade"}, {"label": "2026-07-27", "bal": 1153.9, "type": "wd"}, {"label": "2026-07-28", "bal": 1306.62, "type": "trade"}, {"label": "2026-07-29", "bal": 1493.34, "type": "trade"}, {"label": "2026-07-29", "bal": 1488.06, "type": "trade"}, {"label": "2026-07-29", "bal": 1415.28, "type": "trade"}, {"label": "2026-07-29", "bal": 1514, "type": "trade"}], "daily": {"2026-07-26": -102.86, "2026-07-27": -1743.24, "2026-07-28": 152.72, "2026-07-29": 207.38}, "bySession": {"Asian": {"pnl": -102.86, "n": 3}, "London": {"pnl": -1743.24, "n": 1}, "New York": {"pnl": 360.1, "n": 5}}, "byDir": {"Short": {"pnl": 504.6, "n": 4}, "Long": {"pnl": -247.36, "n": 4}, "Mixed": {"pnl": -1743.24, "n": 1}}, "byDow": {"Sunday": {"pnl": -102.86, "n": 3}, "Monday": {"pnl": -1743.24, "n": 1}, "Tuesday": {"pnl": 152.72, "n": 1}, "Wednesday": {"pnl": 207.38, "n": 4}}, "dowOrder": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "winOrder": ["6-7am", "10-11am", "11-12pm", "6-7pm", "7-8pm", "8-9pm"], "winVals": [-1743.24, 207.38, 152.72, 66.44, -163.18, -6.12], "underwater": [{"label": "start", "dd": 0.0}, {"label": "07-26", "dd": 0.0}, {"label": "07-26", "dd": -163.18}, {"label": "07-26", "dd": -169.3}, {"label": "07-27", "dd": -1912.54}, {"label": "07-28", "dd": -1759.82}, {"label": "07-29", "dd": -1573.1}, {"label": "07-29", "dd": -1578.38}, {"label": "07-29", "dd": -1651.16}, {"label": "07-29", "dd": -1552.44}], "disc": {"adherence": 0.2, "followedPnl": 152.72, "followedWinRate": 1.0, "nFollowed": 1, "nTotal": 5, "pos": {"well-managed": 152.72, "perfect-entry": 152.72}, "neg": {"sl-placement": -1906.42, "impulsive": -1912.54, "revenge-trading": -1743.24}, "posN": {"well-managed": 1, "perfect-entry": 1}, "negN": {"sl-placement": 2, "impulsive": 3, "revenge-trading": 1}}, "dailyN": {"2026-07-26": 3, "2026-07-27": 1, "2026-07-28": 1, "2026-07-29": 4}}; const m=DATA.meta;
+const money=(n,dp=2)=>(n<0?"-$":"$")+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp});
+const money0=n=>(n<0?"-$":"$")+Math.abs(n).toLocaleString('en-US',{maximumFractionDigits:0});
+const holdFmt=v=>v==null?'—':(v>=60?Math.floor(v/60)+'h '+(v%60)+'m':v+'m');
+function cardHTML(arr){return arr.map(c=>`<div class="card"><div class="lbl">${c.l}</div><div class="val ${c.c||''}">${c.v}</div></div>`).join('');}
+
+// vertical bar chart with generous padding so value labels never hit axis/dates
+function vbar(el,labels,vals){
+  const W=720,H=250,padL=58,padR=14,padT=20,padB=54;
+  const box=document.getElementById(el); if(!box) return;
+  if(!labels.length){box.innerHTML='<p style="color:#9ca3af;font-size:13px;padding:12px">No data yet.</p>';return;}
+  const maxV=Math.max(0,...vals),minV=Math.min(0,...vals),span=(maxV-minV)||1;
+  const Y=v=>padT+(maxV-v)/span*(H-padT-padB),zeroY=Y(0);
+  const step=(W-padL-padR)/labels.length,bw=Math.min(64,step*0.55);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+  [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);
+    s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#242a33"/>`;
+    s+=`<text x="${padL-8}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#9ca3af">${money0(gv)}</text>`;});
+  s+=`<line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${W-padR}" y2="${zeroY.toFixed(1)}" stroke="#3a414c"/>`;
+  labels.forEach((lb,i)=>{const v=vals[i],cx=padL+step*i+step/2;
+    const top=v>=0?Y(v):zeroY,h=Math.max(Math.abs(Y(v)-zeroY),1),col=v>=0?'#22c55e':'#ef4444';
+    s+=`<rect x="${(cx-bw/2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="4" fill="${col}"/>`;
+    s+=`<text x="${cx.toFixed(1)}" y="${(v>=0?top-5:top+h+13).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${col}">${money0(v)}</text>`;
+    s+=`<text x="${cx.toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="10.5" fill="#8b93a1">${lb}</text>`;});
+  s+=`</svg>`; box.innerHTML=s;
+}
+function lineArea(el,pts,opts){ // pts:[{label,val}], opts.underwater=>all<=0 area
+  const box=document.getElementById(el); if(!box) return;
+  const W=720,H=240,padL=64,padR=16,padT=16,padB=28;
+  if(pts.length<2){box.innerHTML='<p style="color:#9ca3af;font-size:13px;padding:12px">Not enough data.</p>';return;}
+  const vals=pts.map(p=>p.val),maxV=Math.max(...vals,0),minV=Math.min(...vals,0),span=(maxV-minV)||1;
+  const X=i=>padL+i/(pts.length-1)*(W-padL-padR),Y=v=>padT+(maxV-v)/span*(H-padT-padB);
+  const col=opts&&opts.color||'#e6e8ec',fill=opts&&opts.fill||'rgba(34,197,94,.10)';
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+  [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);
+    s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#242a33"/>`;
+    s+=`<text x="${padL-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#9ca3af">${money0(gv)}</text>`;});
+  const base=opts&&opts.underwater?Y(0):H-padB;
+  const line=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(p.val).toFixed(1)}`).join(' ');
+  s+=`<path d="${line} L${X(pts.length-1).toFixed(1)} ${base.toFixed(1)} L${X(0).toFixed(1)} ${base.toFixed(1)} Z" fill="${fill}"/>`;
+  s+=`<path d="${line}" fill="none" stroke="${col}" stroke-width="2"/>`;
+  pts.forEach((p,i)=>{s+=`<circle cx="${X(i).toFixed(1)}" cy="${Y(p.val).toFixed(1)}" r="3.5" fill="${p.type==='wd'?'#f59e0b':col}"/>`;});
+  pts.forEach((p,i)=>{ if(pts.length>9&&i%2&&i!==pts.length-1)return;
+    s+=`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="#8b93a1">${(p.label||'').replace('2026-','')}</text>`;});
+  s+=`</svg>`; box.innerHTML=s;
+}
+function donut(el,legendEl,entries){
+  const box=document.getElementById(el); if(!box) return;
+  const colors={"Asian":"#eab308","London":"#22c55e","New York":"#3b82f6","—":"#8b93a1"};
+  const total=entries.reduce((a,[,v])=>a+v.n,0);
+  if(!total){box.innerHTML='<p style="color:#9ca3af;font-size:13px;padding:12px">No data.</p>';return;}
+  const W=240,H=240,cx=120,cy=120,r=88,ir=52; let a0=-Math.PI/2;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+  entries.forEach(([k,v])=>{const frac=v.n/total,a1=a0+frac*2*Math.PI;
+    const x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    const xi0=cx+ir*Math.cos(a1),yi0=cy+ir*Math.sin(a1),xi1=cx+ir*Math.cos(a0),yi1=cy+ir*Math.sin(a0);
+    const lg=frac>0.5?1:0;
+    s+=`<path d="M${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${lg} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} L${xi0.toFixed(1)} ${yi0.toFixed(1)} A${ir} ${ir} 0 ${lg} 0 ${xi1.toFixed(1)} ${yi1.toFixed(1)} Z" fill="${colors[k]||'#9ca3af'}"/>`;
+    a0=a1;});
+  s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="22" font-weight="700" fill="#e6e8ec">${total}</text>`;
+  s+=`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="11" fill="#8b93a1">trades</text></svg>`;
+  box.innerHTML=s;
+  if(legendEl) document.getElementById(legendEl).innerHTML=entries.map(([k,v])=>
+    `<span><span class="dot" style="background:${colors[k]||'#9ca3af'}"></span>${k} · ${v.n} · <b class="${v.pnl>=0?'pos':'neg'}">${money0(v.pnl)}</b></span>`).join('');
+}
+
+document.getElementById('upd').textContent="updated "+m.updated;
+const path=location.pathname.replace(/\/+$/,'');
+if(path.endsWith('/analytics')||document.querySelector('h1')&&document.querySelector('h1').textContent.startsWith('MNQ Live')){
+  document.getElementById('cards').innerHTML=cardHTML([
+    {l:"Win Rate",v:(m.winRate*100).toFixed(0)+"%"},
+    {l:"Total P/L",v:money(m.tradingPnl),c:m.tradingPnl>=0?"pos":"neg"},
+    {l:"Return %",v:(m.returnPct*100).toFixed(1)+"%",c:m.returnPct>=0?"pos":"neg"},
+    {l:"Profit Factor",v:(m.profitFactor==null?"—":m.profitFactor.toFixed(2)),c:m.profitFactor>=1?"pos":"neg"}]);
+  lineArea('eq',[{label:'start',val:m.start,type:'start'},...DATA.equity.filter(e=>e.bal!=null&&e.type!=='start').map(e=>({label:e.label,val:e.bal,type:e.type}))]);
+  const order=["Long","Short","Mixed"].filter(k=>DATA.byDir[k]);
+  vbar('dir',order,order.map(k=>DATA.byDir[k].pnl));
+  vbar('dow',DATA.dowOrder.filter(k=>DATA.byDow[k]).map(k=>k.slice(0,3)),DATA.dowOrder.filter(k=>DATA.byDow[k]).map(k=>DATA.byDow[k].pnl));
+  donut('donut','slegend',Object.entries(DATA.bySession));
+}
+const h1=document.querySelector('h1').textContent;
+if(h1.startsWith('Time Analysis')){
+  document.getElementById('cards').innerHTML=cardHTML([
+    {l:"Avg P/L / Day",v:money(m.avgPerDay),c:m.avgPerDay>=0?"pos":"neg"},
+    {l:"Avg P/L / Month",v:money(m.avgPerMonth),c:m.avgPerMonth>=0?"pos":"neg"},
+    {l:"Best Trading Day",v:money(m.bestDay),c:"pos"},
+    {l:"Worst Trading Day",v:money(m.worstDay),c:"neg"}]);
+  const wk=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  vbar('wkday',wk.map(k=>k.slice(0,3)),wk.map(k=>DATA.byDow[k]?DATA.byDow[k].pnl:0));
+  vbar('dow',DATA.dowOrder.filter(k=>DATA.byDow[k]).map(k=>k.slice(0,3)),DATA.dowOrder.filter(k=>DATA.byDow[k]).map(k=>DATA.byDow[k].pnl));
+  vbar('win',DATA.winOrder,DATA.winVals);
+}
+if(h1.startsWith('Risk Analysis')){
+  document.getElementById('cards').innerHTML=cardHTML([
+    {l:"Max Drawdown",v:money(m.maxDD),c:"neg"},
+    {l:"Biggest Loser",v:money(m.biggestLoss),c:"neg"},
+    {l:"Biggest Winner",v:money(m.biggestWin),c:"pos"},
+    {l:"Recovery Factor",v:(m.recoveryFactor==null?"—":m.recoveryFactor.toFixed(2)),c:m.recoveryFactor>=0?"pos":"neg"}]);
+  document.getElementById('cards2').innerHTML=cardHTML([
+    {l:"Avg Win",v:money(m.avgWin),c:"pos"},
+    {l:"Avg Loss",v:money(m.avgLoss),c:"neg"},
+    {l:"Risk / Reward",v:(m.rr==null?"—":m.rr.toFixed(2))},
+    {l:"Consistency (green days)",v:(m.consistency*100).toFixed(0)+"%"}]);
+  document.getElementById('cards3').innerHTML=cardHTML([
+    {l:"Expectancy / Trade",v:money(m.expectancy),c:m.expectancy>=0?"pos":"neg"},
+    {l:"Max Win Streak",v:m.maxWinStreak,c:"pos"},
+    {l:"Max Loss Streak",v:m.maxLossStreak,c:"neg"},
+    {l:"Avg Hold Time",v:holdFmt(m.avgHoldMin)}]);
+  lineArea('dd',DATA.underwater.map(u=>({label:u.label,val:u.dd})),{underwater:true,color:'#ef4444',fill:'rgba(220,38,38,.10)'});
+}
+if(h1.startsWith('Discipline')){
+  const d=DATA.disc||{adherence:0,followedPnl:0,followedWinRate:0,pos:{},neg:{}};
+  document.getElementById('cards').innerHTML=cardHTML([
+    {l:"Plan Adherence",v:(d.adherence*100).toFixed(0)+"%",c:d.adherence>=0.5?"pos":"neg"},
+    {l:"Followed-Plan P/L",v:money(d.followedPnl),c:d.followedPnl>=0?"pos":"neg"},
+    {l:"Followed-Plan Win Rate",v:(d.followedWinRate*100).toFixed(0)+"%",c:d.followedWinRate>=0.5?"pos":"neg"}]);
+  const pk=Object.keys(d.pos), nk=Object.keys(d.neg);
+  vbar('pos',pk.map(k=>`${k} (${(d.posN||{})[k]||0})`),pk.map(k=>d.pos[k]));
+  vbar('neg',nk.map(k=>`${k} (${(d.negN||{})[k]||0})`),nk.map(k=>d.neg[k]));
+}
+
+</script>
+</body></html>

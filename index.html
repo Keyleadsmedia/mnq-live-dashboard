@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MNQ Live — P/L Dashboard</title>
+<style>
+:root{color-scheme:dark;--bg:#0e1116;--card:#161a20;--ink:#e6e8ec;--muted:#8b93a1;--line:#252b34;
+--green:#22c55e;--greenbg:#12341f;--greenbd:#1e5233;--red:#ef4444;--redbg:#3a1c1c;--redbd:#5e2a2a;
+--blue:#3b82f6;--bluebg:#16233f;--bluebd:#274a80;--flat:#1a1f27;--accent:#2a3140;--grid:#242a33;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 22px 40px;}
+h1{font-size:20px;margin:0 0 2px;font-weight:700;letter-spacing:-.3px}
+.sub{color:var(--muted);font-size:12.5px;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card .lbl{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.card .val{font-size:24px;font-weight:700;margin-top:6px;letter-spacing:-.5px}
+.grid{display:grid;grid-template-columns:1fr 280px;gap:14px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.calhead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.calhead h2{font-size:15px;margin:0;font-weight:650;flex:1}
+.nav{border:1px solid var(--line);background:var(--flat);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:15px;color:var(--ink)}
+.nav:hover{background:var(--accent)}
+.mstat{font-size:12px;color:var(--muted);background:var(--flat);border:1px solid var(--line);border-radius:20px;padding:5px 12px}
+.mstat b{font-weight:700}
+table.cal{width:100%;border-collapse:separate;border-spacing:5px;table-layout:fixed}
+table.cal th{font-size:10.5px;color:var(--muted);font-weight:600;padding-bottom:2px;text-transform:uppercase;letter-spacing:.4px}
+table.cal td{height:70px;vertical-align:top;border-radius:10px;background:var(--flat);border:1px solid transparent;padding:6px 8px;position:relative}
+td.out{background:transparent;border:none}
+td .dn{font-size:11.5px;color:var(--muted)}
+td .pl{position:absolute;left:2px;right:2px;top:26px;text-align:center;font-weight:700;font-size:12.5px}
+td .tc{position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9.5px;color:var(--muted)}
+td.win{background:var(--greenbg);border-color:var(--greenbd)} td.win .pl{color:var(--green)}
+td.loss{background:var(--redbg);border-color:var(--redbd)} td.loss .pl{color:var(--red)}
+td.be{background:var(--bluebg);border-color:var(--bluebd)} td.be .pl{color:#cdd6e4}
+td.wk{background:var(--card);border:1px solid var(--line);text-align:left;padding:8px 10px}
+td.wk .wl{font-size:10.5px;color:var(--muted);font-weight:600}
+td.wk .wp{font-size:15px;font-weight:700;margin-top:3px}
+td.wk .wd{font-size:9.5px;color:var(--muted);background:var(--flat);border-radius:10px;padding:1px 7px;display:inline-block;margin-top:5px}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.stat:last-child{border-bottom:none}
+.stat .k{color:var(--muted)}
+.stat .v{font-weight:650}
+.pos{color:var(--green)} .neg{color:var(--red)}
+.chartbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.chartbox h2{font-size:14px;margin:0 0 10px;font-weight:650}
+.cwrap{position:relative;height:230px}
+.foot{color:var(--muted);font-size:11px;margin-top:16px;text-align:center}
+.tag{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:20px;background:var(--flat);color:var(--muted);margin-left:6px;vertical-align:middle}
+.nav2{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.nav2 a{font-size:13px;font-weight:600;text-decoration:none;color:var(--muted);padding:6px 14px;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+.nav2 a.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+@media(max-width:640px){
+ .wrap{padding:14px 12px 30px}
+ .calhead{gap:6px} .calhead h2{font-size:13px} .mstat{font-size:10px;padding:4px 8px}
+ table.cal{border-spacing:3px} table.cal th{font-size:8px}
+ table.cal td{height:52px;padding:3px 2px}
+ td .dn{font-size:9.5px}
+ td .pl{font-size:9.5px;top:18px;left:0;right:0;white-space:nowrap;letter-spacing:-.3px}
+ td .tc{font-size:7.5px;bottom:3px;white-space:nowrap;overflow:hidden}
+ td.wk{padding:4px 4px} td.wk .wl{font-size:8px} td.wk .wp{font-size:10.5px;white-space:nowrap} td.wk .wd{font-size:7.5px}
+}
+@media(max-width:400px){
+ td .pl{font-size:8.5px} td .dn{font-size:9px} table.cal td{height:48px}
+}
+</style></head>
+<body><div class="wrap">
+<h1>MNQ Live — P/L Dashboard <span class="tag" id="upd"></span></h1>
+<div class="sub">Real-money /MNQ · reads your <b>MNQ Live Journal.xlsx</b> · live since Jul 26, 2026</div>
+<div class="nav2"><a href="/" class="active">Dashboard</a><a href="/analytics">Analytics</a><a href="/time">Time</a><a href="/risk">Risk</a><a href="/discipline">Discipline</a></div>
+<div class="cards" id="cards"></div>
+<div class="grid"><div class="panel"><div class="calhead"><button class="nav" id="prev">‹</button><h2 id="mlabel"></h2><button class="nav" id="next">›</button><span class="mstat" id="mpl"></span></div><table class="cal"><colgroup><col span="7" style="width:11.7%"><col style="width:18%"></colgroup><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Week</th></tr></thead><tbody id="calbody"></tbody></table></div><div class="panel"><h2 style="font-size:15px;margin:0 0 6px;font-weight:650">Account &amp; Stats</h2><div id="stats"></div></div></div>
+<div class="chartbox"><h2>Daily P/L</h2><div class="cwrap"><div id="bar" style="width:100%;height:100%"></div></div></div><div class="chartbox"><h2>Equity Curve (Net Liq)</h2><div class="cwrap"><div id="eq" style="width:100%;height:100%"></div></div></div>
+<div class="foot">Source of truth: MNQ Live Journal.xlsx. Per-day trading P/L, not tax/accounting. Withdrawals are marked on the equity curve, not counted as losses.</div>
+</div>
+<script>
+const DATA = {"meta": {"start": 5000, "currentNetLiq": 1514, "withdrawn": 2000, "tradingPnl": -1486, "winRate": 0.4444, "wins": 4, "losses": 5, "totalTrades": 9, "profitFactor": 0.25, "avgWin": 126.15, "avgLoss": -398.12, "bestDay": 207.38, "worstDay": -1743.24, "peak": 5066.44, "maxDD": -3912.54, "goLive": "2026-07-26", "updated": "Jul 29, 2026 10:54 AM"}, "trades": [{"date": "2026-07-26", "dir": "Short", "contracts": 2, "net": 66.44, "wl": "WIN", "bal": 5066.44}, {"date": "2026-07-26", "dir": "Long", "contracts": 6, "net": -163.18, "wl": "LOSS", "bal": 4903.26}, {"date": "2026-07-26", "dir": "Long", "contracts": 4, "net": -6.12, "wl": "LOSS", "bal": 4897.14}, {"date": "2026-07-27", "dir": "Mixed", "contracts": 10, "net": -1743.24, "wl": "LOSS", "bal": 3153.9}, {"date": "2026-07-28", "dir": "Short", "contracts": 1, "net": 152.72, "wl": "WIN", "bal": 1306.62}, {"date": "2026-07-29", "dir": "Short", "contracts": 1, "net": 186.72, "wl": "WIN", "bal": 1493.34}, {"date": "2026-07-29", "dir": "Long", "contracts": 1, "net": -5.28, "wl": "LOSS", "bal": 1488.06}, {"date": "2026-07-29", "dir": "Long", "contracts": 1, "net": -72.78, "wl": "LOSS", "bal": 1415.28}, {"date": "2026-07-29", "dir": "Short", "contracts": 1, "net": 98.72, "wl": "WIN", "bal": 1514}], "daily": {"2026-07-26": -102.86, "2026-07-27": -1743.24, "2026-07-28": 152.72, "2026-07-29": 207.38}, "dailyN": {"2026-07-26": 3, "2026-07-27": 1, "2026-07-28": 1, "2026-07-29": 4}, "equity": [{"label": "2026-07-26", "bal": 5066.44, "type": "trade"}, {"label": "2026-07-26", "bal": 4903.26, "type": "trade"}, {"label": "2026-07-26", "bal": 4897.14, "type": "trade"}, {"label": "2026-07-27", "bal": 3153.9, "type": "trade"}, {"label": "2026-07-27 (withdrawal)", "bal": 1153.9, "type": "wd"}, {"label": "2026-07-28", "bal": 1306.62, "type": "trade"}, {"label": "2026-07-29", "bal": 1493.34, "type": "trade"}, {"label": "2026-07-29", "bal": 1488.06, "type": "trade"}, {"label": "2026-07-29", "bal": 1415.28, "type": "trade"}, {"label": "2026-07-29", "bal": 1514, "type": "trade"}]};
+const m = DATA.meta;
+const money = (n,dp=2)=> (n<0?"-$":"$")+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp});
+const money0 = n=> (n<0?"-$":"$")+Math.abs(n).toLocaleString('en-US',{maximumFractionDigits:0});
+{const _u=document.getElementById('upd'); if(_u) _u.textContent = "updated "+m.updated;}
+
+// cards
+const cards=[
+ {lbl:"Win Rate",val:(m.winRate*100).toFixed(0)+"%",cls:""},
+ {lbl:"Trading P/L",val:money(m.tradingPnl),cls:m.tradingPnl>=0?"pos":"neg"},
+ {lbl:"Net Liq (real)",val:money(m.currentNetLiq),cls:""},
+ {lbl:"Profit Factor",val:(m.profitFactor==null?"—":m.profitFactor.toFixed(2)),cls:m.profitFactor>=1?"pos":"neg"},
+];
+{const _c=document.getElementById('cards'); if(_c) _c.innerHTML = cards.map(c=>
+ `<div class="card"><div class="lbl">${c.lbl}</div><div class="val ${c.cls}">${c.val}</div></div>`).join('');}
+
+// stats
+const st=[
+ ["Total trades", m.totalTrades],
+ ["Wins / Losses", `<span class="pos">${m.wins}</span> / <span class="neg">${m.losses}</span>`],
+ ["Avg win", `<span class="pos">${money(m.avgWin)}</span>`],
+ ["Avg loss", `<span class="neg">${money(m.avgLoss)}</span>`],
+ ["Best day", `<span class="pos">${money(m.bestDay)}</span>`],
+ ["Worst day", `<span class="neg">${money(m.worstDay)}</span>`],
+ ["Account peak", money(m.peak)],
+ ["Max drawdown", `<span class="neg">${money(m.maxDD)}</span>`],
+ ["Cash withdrawn (yours)", money(m.withdrawn)],
+ ["Starting balance", money(m.start)],
+];
+{const _s=document.getElementById('stats'); if(_s) _s.innerHTML = st.map(s=>
+ `<div class="stat"><span class="k">${s[0]}</span><span class="v">${s[1]}</span></div>`).join('');}
+
+// calendar
+const daily = DATA.daily;
+const dailyN = DATA.dailyN||{};
+const months = Object.keys(daily).map(d=>d.slice(0,7));
+let cur = months.length? months.sort().slice(-1)[0] : "2026-07";
+function render(){
+  const [y,mo]=cur.split('-').map(Number);
+  const first=new Date(y,mo-1,1), start=first.getDay(), dim=new Date(y,mo,0).getDate();
+  document.getElementById('mlabel').textContent =
+    first.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  let mpl=0,mt=0;
+  let cells=[]; for(let i=0;i<start;i++) cells.push(null);
+  for(let d=1;d<=dim;d++) cells.push(d);
+  let html='', weekNo=0;
+  for(let i=0;i<cells.length;i+=7){
+    weekNo++; let wpl=0,wdays=0,row='';
+    for(let j=0;j<7;j++){
+      const d=cells[i+j];
+      if(!d){row+='<td class="out"></td>';continue;}
+      const key=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      if(key in daily){
+        const v=daily[key], n=dailyN[key]||0; mpl+=v; mt++; wpl+=v; wdays++;
+        const cls=v>0?'win':(v<0?'loss':'be');
+        row+=`<td class="${cls}"><span class="dn">${d}</span><span class="pl">${money0(v)}</span><span class="tc">${n} trade${n===1?'':'s'}</span></td>`;
+      } else {
+        row+=`<td><span class="dn">${d}</span></td>`;
+      }
+    }
+    const wcls=wdays?(wpl>0?'pos':(wpl<0?'neg':'')):'';
+    const wc=wdays
+      ? `<div class="wl">Week ${weekNo}</div><div class="wp ${wcls}">${money0(wpl)}</div><div class="wd">${wdays} day${wdays===1?'':'s'}</div>`
+      : `<div class="wl" style="color:#5b6371">Week ${weekNo}</div>`;
+    row+=`<td class="wk">${wc}</td>`;
+    html+='<tr>'+row+'</tr>';
+  }
+  document.getElementById('calbody').innerHTML=html;
+  document.getElementById('mpl').innerHTML = mt
+    ? `Monthly: <b class="${mpl>=0?'pos':'neg'}">${money0(mpl)}</b> · ${mt} day${mt>1?'s':''}`
+    : 'No trades this month';
+}
+document.getElementById('prev').onclick=()=>{cur=shift(cur,-1);render();};
+document.getElementById('next').onclick=()=>{cur=shift(cur,1);render();};
+function shift(ym,delta){let[y,mo]=ym.split('-').map(Number);mo+=delta;if(mo<1){mo=12;y--;}if(mo>12){mo=1;y++;}return `${y}-${String(mo).padStart(2,'0')}`;}
+render();
+
+// ---- self-contained SVG charts (no external library) ----
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+// Daily P/L bar chart
+(function drawBars(){
+  const box=document.getElementById('bar'); if(!box) return;
+  const keys=Object.keys(daily).sort();
+  const W=720,H=250,padL=54,padR=12,padT=18,padB=52;
+  if(!keys.length){box.innerHTML='<p style="color:#9ca3af;font-size:13px;padding:12px">No trades yet.</p>';return;}
+  const vals=keys.map(k=>daily[k]);
+  const maxV=Math.max(0,...vals), minV=Math.min(0,...vals), span=(maxV-minV)||1;
+  const Y=v=>padT+(maxV-v)/span*(H-padT-padB);
+  const zeroY=Y(0), step=(W-padL-padR)/keys.length, bw=Math.min(58,step*0.55);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+  [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);
+    s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#242a33"/>`;
+    s+=`<text x="${padL-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#9ca3af">${money0(gv)}</text>`;});
+  s+=`<line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${W-padR}" y2="${zeroY.toFixed(1)}" stroke="#3a414c"/>`;
+  keys.forEach((k,i)=>{const v=daily[k],cx=padL+step*i+step/2;
+    const top=v>=0?Y(v):zeroY, h=Math.max(Math.abs(Y(v)-zeroY),1), col=v>=0?'#22c55e':'#ef4444';
+    s+=`<rect x="${(cx-bw/2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="4" fill="${col}"/>`;
+    s+=`<text x="${cx.toFixed(1)}" y="${(v>=0?top-5:top+h+13).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${col}">${money0(v)}</text>`;
+    s+=`<text x="${cx.toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="10" fill="#8b93a1">${k.slice(5)}</text>`;});
+  s+=`</svg>`; document.getElementById('bar').innerHTML=s;
+})();
+
+// Equity curve
+(function drawEquity(){
+  const box=document.getElementById('eq'); if(!box) return;
+  const eq=DATA.equity.filter(e=>e.bal!=null);
+  const pts=[{label:'start',bal:m.start,type:'start'},...eq];
+  const W=720,H=230,padL=54,padR=14,padT=16,padB=26;
+  if(pts.length<2){box.innerHTML='<p style="color:#9ca3af;font-size:13px;padding:12px">Not enough data yet.</p>';return;}
+  const vals=pts.map(p=>p.bal), maxV=Math.max(...vals), minV=Math.min(...vals), span=(maxV-minV)||1;
+  const X=i=>padL+i/(pts.length-1)*(W-padL-padR), Y=v=>padT+(maxV-v)/span*(H-padT-padB);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+  [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);
+    s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#242a33"/>`;
+    s+=`<text x="${padL-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#9ca3af">${money0(gv)}</text>`;});
+  let line=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(p.bal).toFixed(1)}`).join(' ');
+  let area=line+` L${X(pts.length-1).toFixed(1)} ${(H-padB).toFixed(1)} L${X(0).toFixed(1)} ${(H-padB).toFixed(1)} Z`;
+  s+=`<path d="${area}" fill="rgba(34,197,94,.10)"/>`;
+  s+=`<path d="${line}" fill="none" stroke="#e6e8ec" stroke-width="2"/>`;
+  pts.forEach((p,i)=>{const wd=p.type==='wd';
+    s+=`<circle cx="${X(i).toFixed(1)}" cy="${Y(p.bal).toFixed(1)}" r="4" fill="${wd?'#f59e0b':'#e6e8ec'}"/>`;});
+  pts.forEach((p,i)=>{ if(pts.length>9 && i%2 && i!==pts.length-1) return;
+    const lab=p.label.replace('2026-','').replace(' (withdrawal)',' ↓');
+    s+=`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="#8b93a1">${esc(lab)}</text>`;});
+  s+=`<text x="${W-padR}" y="${padT-4}" text-anchor="end" font-size="9.5" fill="#f59e0b">● withdrawal</text>`;
+  s+=`</svg>`; document.getElementById('eq').innerHTML=s;
+})();
+</script>
+</body></html>

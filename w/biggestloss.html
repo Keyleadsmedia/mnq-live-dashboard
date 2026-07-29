@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Biggest Loser</title><style>
+:root{--ink:#e6e8ec;--muted:#8b93a1;--grid:rgba(130,140,155,.22);--zero:rgba(130,140,155,.5)}
+*{box-sizing:border-box} html,body{margin:0;height:100%;background:#191919}
+body{color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding:7px}
+#root{min-height:calc(100vh - 14px);background:#21242a;border:1px solid #31353d;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.45);overflow:hidden;display:flex;flex-direction:column}
+.kpi{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;text-align:center;padding:12px}
+.kpi .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.kpi .val{font-size:34px;font-weight:800;margin-top:6px;letter-spacing:-.5px;line-height:1}
+.cw{flex:1 0 auto;min-height:200px;width:100%;padding:10px}
+.wtitle{flex:0 0 auto;font-size:12.5px;font-weight:650;color:var(--ink);padding:11px 13px 2px}
+.pos{color:#16a34a}.neg{color:#dc2626}
+.chead{font-size:12.5px;font-weight:650;color:var(--ink);margin:2px 4px 6px;text-align:center}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:6px;justify-content:center}
+.legend span{display:inline-flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+</style></head><body><div id="root"></div><script>
+const DATA={"meta": {"winRate": 0.4444, "tradingPnl": -1486.0, "returnPct": -0.2972, "profitFactor": 0.25, "totalTrades": 9, "wins": 4, "losses": 5, "start": 5000, "updated": "Jul 29, 2026 11:08 AM", "avgPerDay": -371.5, "avgPerMonth": -1486.0, "bestDay": 207.38, "worstDay": -1743.24, "nDays": 4, "nMonths": 1, "maxDD": -1912.54, "biggestWin": 186.72, "biggestLoss": -1743.24, "recoveryFactor": -0.78, "avgWin": 126.15, "avgLoss": -398.12, "rr": 0.32, "consistency": 0.5, "greenDays": 2, "currentNetLiq": 1514, "withdrawn": 2000, "peak": 5066.44, "expectancy": -165.11, "avgHoldMin": 56, "maxWinStreak": 2, "maxLossStreak": 3, "curStreak": 1}, "trades": [{"date": "2026-07-26", "dir": "Short", "net": 66.44, "session": "Asian", "dow": "Sunday", "entry": "18:23", "exit": "18:29", "hold": 6, "win": "6-7pm", "hr": 18}, {"date": "2026-07-26", "dir": "Long", "net": -163.18, "session": "Asian", "dow": "Sunday", "entry": "19:54", "exit": null, "hold": null, "win": "7-8pm", "hr": 19}, {"date": "2026-07-26", "dir": "Long", "net": -6.12, "session": "Asian", "dow": "Sunday", "entry": "20:37", "exit": "20:42", "hold": 5, "win": "8-9pm", "hr": 20}, {"date": "2026-07-27", "dir": "Mixed", "net": -1743.24, "session": "London", "dow": "Monday", "entry": "06:14", "exit": "10:23", "hold": 249, "win": "6-7am", "hr": 6}, {"date": "2026-07-28", "dir": "Short", "net": 152.72, "session": "New York", "dow": "Tuesday", "entry": "11:39", "exit": "14:24", "hold": 165, "win": "11-12pm", "hr": 11}, {"date": "2026-07-29", "dir": "Short", "net": 186.72, "session": "New York", "dow": "Wednesday", "entry": "10:04", "exit": "10:12", "hold": 8, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Long", "net": -5.28, "session": "New York", "dow": "Wednesday", "entry": "10:15", "exit": "10:16", "hold": 1, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Long", "net": -72.78, "session": "New York", "dow": "Wednesday", "entry": "10:17", "exit": "10:24", "hold": 7, "win": "10-11am", "hr": 10}, {"date": "2026-07-29", "dir": "Short", "net": 98.72, "session": "New York", "dow": "Wednesday", "entry": "10:38", "exit": "10:46", "hold": 8, "win": "10-11am", "hr": 10}], "equity": [{"label": "start", "bal": 5000, "type": "start"}, {"label": "2026-07-26", "bal": 5066.44, "type": "trade"}, {"label": "2026-07-26", "bal": 4903.26, "type": "trade"}, {"label": "2026-07-26", "bal": 4897.14, "type": "trade"}, {"label": "2026-07-27", "bal": 3153.9, "type": "trade"}, {"label": "2026-07-27", "bal": 1153.9, "type": "wd"}, {"label": "2026-07-28", "bal": 1306.62, "type": "trade"}, {"label": "2026-07-29", "bal": 1493.34, "type": "trade"}, {"label": "2026-07-29", "bal": 1488.06, "type": "trade"}, {"label": "2026-07-29", "bal": 1415.28, "type": "trade"}, {"label": "2026-07-29", "bal": 1514, "type": "trade"}], "daily": {"2026-07-26": -102.86, "2026-07-27": -1743.24, "2026-07-28": 152.72, "2026-07-29": 207.38}, "bySession": {"Asian": {"pnl": -102.86, "n": 3}, "London": {"pnl": -1743.24, "n": 1}, "New York": {"pnl": 360.1, "n": 5}}, "byDir": {"Short": {"pnl": 504.6, "n": 4}, "Long": {"pnl": -247.36, "n": 4}, "Mixed": {"pnl": -1743.24, "n": 1}}, "byDow": {"Sunday": {"pnl": -102.86, "n": 3}, "Monday": {"pnl": -1743.24, "n": 1}, "Tuesday": {"pnl": 152.72, "n": 1}, "Wednesday": {"pnl": 207.38, "n": 4}}, "dowOrder": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "winOrder": ["6-7am", "10-11am", "11-12pm", "6-7pm", "7-8pm", "8-9pm"], "winVals": [-1743.24, 207.38, 152.72, 66.44, -163.18, -6.12], "underwater": [{"label": "start", "dd": 0.0}, {"label": "07-26", "dd": 0.0}, {"label": "07-26", "dd": -163.18}, {"label": "07-26", "dd": -169.3}, {"label": "07-27", "dd": -1912.54}, {"label": "07-28", "dd": -1759.82}, {"label": "07-29", "dd": -1573.1}, {"label": "07-29", "dd": -1578.38}, {"label": "07-29", "dd": -1651.16}, {"label": "07-29", "dd": -1552.44}], "disc": {"adherence": 0.2, "followedPnl": 152.72, "followedWinRate": 1.0, "nFollowed": 1, "nTotal": 5, "pos": {"well-managed": 152.72, "perfect-entry": 152.72}, "neg": {"sl-placement": -1906.42, "impulsive": -1912.54, "revenge-trading": -1743.24}, "posN": {"well-managed": 1, "perfect-entry": 1}, "negN": {"sl-placement": 2, "impulsive": 3, "revenge-trading": 1}}, "dailyN": {"2026-07-26": 3, "2026-07-27": 1, "2026-07-28": 1, "2026-07-29": 4}}; const m=DATA.meta;
+const money=(n,dp=2)=>n==null?'—':((n<0?'-$':'$')+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp}));
+const money0=n=>n==null?'—':((n<0?'-$':'$')+Math.abs(n).toLocaleString('en-US',{maximumFractionDigits:0}));
+const holdFmt=v=>v==null?'—':(v>=60?Math.floor(v/60)+'h '+(v%60)+'m':v+'m');
+const sign=n=>n==null?'':(n>=0?'pos':'neg');
+const GRID='rgba(130,140,155,.22)',ZERO='rgba(130,140,155,.5)',AX='#8b93a1';
+function vbar(el,labels,vals){const box=document.getElementById(el);if(!labels.length){box.innerHTML='<div style="color:#9aa3b2;font-size:12px;padding:10px">No data yet.</div>';return;}
+ const W=680,H=300,padL=56,padR=14,padT=20,padB=54;const maxV=Math.max(0,...vals),minV=Math.min(0,...vals),span=(maxV-minV)||1;
+ const Y=v=>padT+(maxV-v)/span*(H-padT-padB),zeroY=Y(0),step=(W-padL-padR)/labels.length,bw=Math.min(64,step*0.55);
+ let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="inherit">`;
+ [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="${GRID}"/><text x="${padL-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="${AX}">${money0(gv)}</text>`;});
+ s+=`<line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${W-padR}" y2="${zeroY.toFixed(1)}" stroke="${ZERO}"/>`;
+ labels.forEach((lb,i)=>{const v=vals[i],cx=padL+step*i+step/2,top=v>=0?Y(v):zeroY,h=Math.max(Math.abs(Y(v)-zeroY),1),col=v>=0?'#16a34a':'#dc2626';
+  s+=`<rect x="${(cx-bw/2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="4" fill="${col}"/><text x="${cx.toFixed(1)}" y="${(v>=0?top-5:top+h+13).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${col}">${money0(v)}</text><text x="${cx.toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="10" fill="${AX}">${lb}</text>`;});
+ box.innerHTML=s+`</svg>`;}
+function lineArea(el,pts,opts){const box=document.getElementById(el);if(pts.length<2){box.innerHTML='<div style="color:#9aa3b2;font-size:12px;padding:10px">Not enough data.</div>';return;}
+ const W=680,H=300,padL=62,padR=16,padT=16,padB=28;const vals=pts.map(p=>p.val),maxV=Math.max(...vals,0),minV=Math.min(...vals,0),span=(maxV-minV)||1;
+ const X=i=>padL+i/(pts.length-1)*(W-padL-padR),Y=v=>padT+(maxV-v)/span*(H-padT-padB);const col=opts.color||'#16a34a',fill=opts.fill||'rgba(22,163,74,.12)';
+ let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="inherit">`;
+ [maxV,(maxV+minV)/2,minV].forEach(gv=>{const gy=Y(gv);s+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="${GRID}"/><text x="${padL-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9.5" fill="${AX}">${money0(gv)}</text>`;});
+ const base=opts.underwater?Y(0):H-padB,line=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(p.val).toFixed(1)}`).join(' ');
+ s+=`<path d="${line} L${X(pts.length-1).toFixed(1)} ${base.toFixed(1)} L${X(0).toFixed(1)} ${base.toFixed(1)} Z" fill="${fill}"/><path d="${line}" fill="none" stroke="${col}" stroke-width="2"/>`;
+ pts.forEach((p,i)=>{s+=`<circle cx="${X(i).toFixed(1)}" cy="${Y(p.val).toFixed(1)}" r="3.5" fill="${p.type==='wd'?'#f59e0b':col}"/>`;});
+ pts.forEach((p,i)=>{if(pts.length>9&&i%2&&i!==pts.length-1)return;s+=`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="${AX}">${(p.label||'').replace('2026-','').replace(' (withdrawal)',' ↓').replace(' wd',' ↓')}</text>`;});
+ box.innerHTML=s+`</svg>`;}
+function donut(el,entries){const box=document.getElementById(el);const colors={"Asian":"#eab308","London":"#16a34a","New York":"#3b82f6","—":"#9aa3b2"};
+ const total=entries.reduce((a,[,v])=>a+v.n,0);if(!total){box.innerHTML='<div style="color:#9aa3b2;font-size:12px;padding:10px">No data.</div>';return;}
+ const W=260,H=250,cx=130,cy=118,r=86,ir=52;let a0=-Math.PI/2,s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="inherit">`;
+ entries.forEach(([k,v])=>{const f=v.n/total,a1=a0+f*2*Math.PI,x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1),xi0=cx+ir*Math.cos(a1),yi0=cy+ir*Math.sin(a1),xi1=cx+ir*Math.cos(a0),yi1=cy+ir*Math.sin(a0),lg=f>0.5?1:0;
+  s+=`<path d="M${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${lg} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} L${xi0.toFixed(1)} ${yi0.toFixed(1)} A${ir} ${ir} 0 ${lg} 0 ${xi1.toFixed(1)} ${yi1.toFixed(1)} Z" fill="${colors[k]||'#9aa3b2'}"/>`;a0=a1;});
+ s+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-size="21" font-weight="700" fill="currentColor">${total}</text><text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="10.5" fill="${AX}">trades</text></svg>`;
+ box.innerHTML=`<div class="cw" style="padding:0">${s}</div><div class="legend">`+entries.map(([k,v])=>`<span><span class="dot" style="background:${colors[k]||'#9aa3b2'}"></span>${k} · ${v.n} · <b class="${v.pnl>=0?'pos':'neg'}">${money0(v.pnl)}</b></span>`).join('')+`</div>`;}
+function calendar(el){
+ const box=document.getElementById(el);const daily=DATA.daily,dailyN=DATA.dailyN||{};
+ const months=Object.keys(daily).map(d=>d.slice(0,7));
+ let cur=months.length?months.sort().slice(-1)[0]:'2026-07';
+ function shift(ym,dd){let[y,mo]=ym.split('-').map(Number);mo+=dd;if(mo<1){mo=12;y--;}if(mo>12){mo=1;y++;}return `${y}-${String(mo).padStart(2,'0')}`;}
+ function render(){
+  const [y,mo]=cur.split('-').map(Number);const first=new Date(y,mo-1,1),start=first.getDay(),dim=new Date(y,mo,0).getDate();
+  let cells=[];for(let i=0;i<start;i++)cells.push(null);for(let d=1;d<=dim;d++)cells.push(d);
+  let rows='',mpl=0,mt=0,wn=0;
+  for(let i=0;i<cells.length;i+=7){wn++;let wpl=0,wd=0,row='';
+   for(let j=0;j<7;j++){const d=cells[i+j];if(!d){row+='<td class="o"></td>';continue;}
+    const key=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    if(key in daily){const v=daily[key],n=dailyN[key]||0;mpl+=v;mt++;wpl+=v;wd++;const cls=v>0?'w':(v<0?'l':'b');
+     row+=`<td class="${cls}"><span class="dn">${d}</span><span class="pl">${money0(v)}</span><span class="tc">${n}t</span></td>`;}
+    else row+=`<td><span class="dn">${d}</span></td>`;}
+   const wc=wd?`<div class="wl">Wk ${wn}</div><div class="wp ${wpl>=0?'pos':'neg'}">${money0(wpl)}</div><div class="wd">${wd}d</div>`:`<div class="wl" style="opacity:.5">Wk ${wn}</div>`;
+   rows+=`<tr>${row}<td class="wk">${wc}</td></tr>`;}
+  box.innerHTML=`<div class="calhd"><button class="cnav" data-d="-1">‹</button><b>${first.toLocaleDateString('en-US',{month:'long',year:'numeric'})}</b><button class="cnav" data-d="1">›</button><span class="mp">Monthly <b class="${mt?(mpl>=0?'pos':'neg'):''}">${mt?money0(mpl):'—'}</b> · ${mt}d</span></div>
+  <table class="cal"><colgroup><col span="7" style="width:11.7%"><col style="width:18%"></colgroup>
+  <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Wk</th></tr></thead><tbody>${rows}</tbody></table>`;
+  box.querySelectorAll('.cnav').forEach(b=>b.onclick=()=>{cur=shift(cur,parseInt(b.dataset.d));render();});
+ }
+ render();
+}
+document.getElementById('root').innerHTML=`<div class="kpi"><div class="lbl">Biggest Loser</div><div class="val ${'neg'}">${money(m.biggestLoss)}</div></div>`;
+</script></body></html>
